@@ -1,0 +1,13 @@
+title New Note SPA
+
+note over browser:
+On submit
+Javascript executed, creates a new note, and adds to the html page
+end note
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+note over browser:
+Payload: {content: "oi", date: "2021-03-15T14:44:45.623Z"}
+end note
+server->browser: Status Code 201 Created
+
+
