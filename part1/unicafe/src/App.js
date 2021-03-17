@@ -5,21 +5,30 @@ const Header = ({heading}) => <h1>{heading}</h1>
 const Button = ({handler, text}) => <button onClick={handler}>{text}</button>
 
 
-const Statistic = ({text, value}) => <div>{text} {"=>"} {value} </div>
+const Statistic = ({text, value}) => {
+
+  return (
+  <tr>
+    <td>{text}</td>   
+    <td>{value}</td>   
+  </tr>
+  )
+}
+
 const Statistics = ({good, neutral, bad}) => {
 
   const total =  (good + bad + neutral)
 
   if (total === 0) return <div>No Feedback Given</div>
   return (
-  <div>
+  <table>
     <Statistic text="good" value={good} />
     <Statistic text="neutral" value={neutral} />
     <Statistic text="bad" value={bad} />
     <Statistic text="All" value={total} />
     <Statistic text="Average" value={(good - bad) / total} />
     <Statistic text="Postitive" value={good / total} />
-  </div>
+  </table>
   )
 }
 
