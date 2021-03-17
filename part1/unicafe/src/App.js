@@ -6,16 +6,18 @@ const Button = ({handler, text}) => <button onClick={handler}>{text}</button>
 
 const Statistics = ({good, neutral, bad}) => {
 
-  const total =  (good + bad + neutral) ? (good + bad + neutral) : 0
+  const total =  (good + bad + neutral)
+
+  if (total === 0) return <div>No Feedback Given</div>
   return (
-  <>
+  <div>
     <p>Good: {good}</p>
     <p>Neutral: {neutral}</p>
     <p>Bad: {bad}</p>
     <p>All: {good + bad + neutral}</p>
-    <p>average: {(good - bad) / (good + bad + neutral)}</p>
-    <p>Positive: {good /  (good + bad + neutral)} %</p>
-  </>
+    <p>average: {(good - bad) / total}</p>
+    <p>Positive: {good /  total} %</p>
+  </div>
   )
 }
 
