@@ -4,6 +4,8 @@ import React, {useState} from "react";
 const Header = ({heading}) => <h1>{heading}</h1>
 const Button = ({handler, text}) => <button onClick={handler}>{text}</button>
 
+
+const Statistic = ({text, value}) => <div>{text} {"=>"} {value} </div>
 const Statistics = ({good, neutral, bad}) => {
 
   const total =  (good + bad + neutral)
@@ -11,12 +13,12 @@ const Statistics = ({good, neutral, bad}) => {
   if (total === 0) return <div>No Feedback Given</div>
   return (
   <div>
-    <p>Good: {good}</p>
-    <p>Neutral: {neutral}</p>
-    <p>Bad: {bad}</p>
-    <p>All: {good + bad + neutral}</p>
-    <p>average: {(good - bad) / total}</p>
-    <p>Positive: {good /  total} %</p>
+    <Statistic text="good" value={good} />
+    <Statistic text="neutral" value={neutral} />
+    <Statistic text="bad" value={bad} />
+    <Statistic text="All" value={total} />
+    <Statistic text="Average" value={(good - bad) / total} />
+    <Statistic text="Postitive" value={good / total} />
   </div>
   )
 }
