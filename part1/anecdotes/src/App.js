@@ -6,6 +6,7 @@ function  getRandomNumber(num = 0) {
 
 const Button = ({handler, text}) => <button onClick={handler}>{text}</button>
 function App() {
+  
   const anecdotes = [
     'If it hurts, do it more often',
     'Adding manpower to a late software project makes it later!',
@@ -16,13 +17,25 @@ function App() {
   ]
    
   const [selected, setSelected] = useState(0);
+  const [points, setPoints] = useState(new Array(anecdotes.length).fill(0));
 
-  const getIndex = () => setSelected(getRandomNumber(anecdotes.length));
+  const getIndex = () => {
+
+    setSelected(() => setSelected(getRandomNumber(anecdotes.length)));
+  }
+  const updateScore = () => {
+    let copy = [...points];
+    copy[selected] += 1
+    setPoints(copy)
+  }
 
   return (
     <div>
       <h1>{anecdotes[selected]}</h1>
+      <br/>
+      <h2>Has {points[selected]} votes.</h2>
       <Button handler={getIndex} text="NEXT" />
+      <Button handler={updateScore} text="VOTE" />
     </div>
   );
 }
