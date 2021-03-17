@@ -4,6 +4,11 @@ function  getRandomNumber(num = 0) {
   return Math.floor(Math.random() * num);
 }
 
+function getMaxIndex(pointArr) {
+  const max = Math.max(...pointArr)
+  return pointArr.indexOf(max)
+
+}
 const Button = ({handler, text}) => <button onClick={handler}>{text}</button>
 function App() {
   
@@ -36,6 +41,10 @@ function App() {
       <h2>Has {points[selected]} votes.</h2>
       <Button handler={getIndex} text="NEXT" />
       <Button handler={updateScore} text="VOTE" />
+
+      <hr />
+      <h1>Anecdote with the most votes</h1>
+      <h3>{!points.every((item) => item === 0) && anecdotes[getMaxIndex(points)]}</h3>
     </div>
   );
 }
