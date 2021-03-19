@@ -13,36 +13,40 @@ function utilCheckIfNameExists(newName, persons) {
 }
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', number: "123-456" }
   ]) 
   const [ newName, setNewName ] = useState('')
+  const [ newNumber, setNumber ] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!utilCheckIfNameExists(newName, persons)){
       setPersons(
-        [...persons, {name: newName}]
+        [...persons, {name: newName, number: newNumber}]
       );
       setNewName('');
+      setNumber('');
     } else {
       alert(`${newName}  already exists`)
     }
 
   }
-  const handleChange = (e) => setNewName(e.target.value)
+  const handleChange = (e) => e.target.name === 'name' ? setNewName(e.target.value) : setNumber(e.target.value)
   return (
     <div>
       <h2>Phonebook</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          name: <input value={newName} onChange={handleChange} />
+          name: <input name="name" value={newName} onChange={handleChange} />
+          <br />
+          number: <input name="number" value={newNumber} onChange={handleChange} />
         </div>
         <div>
           <button type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map(person => <p key={person.name}>{person.name}</p>)}
+      {persons.map(person => <p key={person.name}>{person.name} : {person.number}</p>)}
     </div>
   )
 }
