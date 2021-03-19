@@ -1,5 +1,16 @@
 import React, { useState } from 'react'
 
+function utilCheckIfNameExists(newName, persons) {
+  let found = false;  
+  persons.forEach(p => {
+      if (p.name.toLowerCase() === newName.toLowerCase()) {
+        found = true;
+      }
+    })
+
+    return found;
+
+}
 const App = () => {
   const [ persons, setPersons ] = useState([
     { name: 'Arto Hellas' }
@@ -8,10 +19,14 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setPersons(
-      [...persons, {name: newName}]
-    );
-    setNewName('');
+    if (!utilCheckIfNameExists(newName, persons)){
+      setPersons(
+        [...persons, {name: newName}]
+      );
+      setNewName('');
+    } else {
+      alert(`${newName}  already exists`)
+    }
 
   }
   const handleChange = (e) => setNewName(e.target.value)
