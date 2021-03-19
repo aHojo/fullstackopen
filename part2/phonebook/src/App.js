@@ -12,11 +12,15 @@ function utilCheckIfNameExists(newName, persons) {
 
 }
 const App = () => {
-  const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', number: "123-456" }
-  ]) 
+  const [persons, setPersons] = useState([
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
+  ])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNumber ] = useState('')
+  const [filter, setFilter ] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,9 +36,15 @@ const App = () => {
 
   }
   const handleChange = (e) => e.target.name === 'name' ? setNewName(e.target.value) : setNumber(e.target.value)
+  const handleFilter = (e) => setFilter(e.target.value)
+
+  const peopleToShow = filter === '' ? persons : persons.filter(p => p.name.toLowerCase().includes(filter))
   return (
     <div>
       <h2>Phonebook</h2>
+      <h3>Filter by name</h3>
+      <input  value={filter} onChange={handleFilter} />
+      <h3>Add New Person</h3>
       <form onSubmit={handleSubmit}>
         <div>
           name: <input name="name" value={newName} onChange={handleChange} />
@@ -46,7 +56,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map(person => <p key={person.name}>{person.name} : {person.number}</p>)}
+      {peopleToShow.map(person => <p key={person.name}>{person.name} : {person.number}</p>)}
     </div>
   )
 }
