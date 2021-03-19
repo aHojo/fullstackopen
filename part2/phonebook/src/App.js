@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import Form from './components/form';
+import Filter from './components/filter';
+import Person from './components/person';
 
 function utilCheckIfNameExists(newName, persons) {
   let found = false;  
@@ -42,21 +45,11 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <h3>Filter by name</h3>
-      <input  value={filter} onChange={handleFilter} />
+      <Filter filter={filter} handleFilter={handleFilter} />
       <h3>Add New Person</h3>
-      <form onSubmit={handleSubmit}>
-        <div>
-          name: <input name="name" value={newName} onChange={handleChange} />
-          <br />
-          number: <input name="number" value={newNumber} onChange={handleChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Form name={newName} number={newNumber} hChange={handleChange} hSubmit={handleSubmit} />
       <h2>Numbers</h2>
-      {peopleToShow.map(person => <p key={person.name}>{person.name} : {person.number}</p>)}
+      {peopleToShow.map(person => <Person key={person.name} name={person.name} number={person.number} />)}
     </div>
   )
 }
