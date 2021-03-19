@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Form from './components/form';
 import Filter from './components/filter';
 import Person from './components/person';
+import axios from 'axios';
 
 function utilCheckIfNameExists(newName, persons) {
   let found = false;  
@@ -25,6 +26,15 @@ const App = () => {
   const [ newNumber, setNumber ] = useState('')
   const [filter, setFilter ] = useState('');
 
+  useEffect(() => {
+
+    const fetchtData = async () => {
+      const result = await axios.get('http://localhost:3001/persons');
+      console.log(result.data)
+    }
+    fetchtData()
+    
+  }, [])
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!utilCheckIfNameExists(newName, persons)){
