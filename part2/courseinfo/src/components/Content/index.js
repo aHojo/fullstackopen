@@ -1,7 +1,9 @@
 import Part from '../Part';
 
 const Total = ({ course }) => {
-    const sum = course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises
+    // const sum = course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises
+    const sum = course.parts.reduce((sum, part) => sum += part.exercises, 0);
+
     return (
         <h3>Total of {sum} exercises</h3>
     )
