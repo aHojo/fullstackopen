@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Form from './components/form';
 import Filter from './components/filter';
 import Person from './components/person';
+import Notification from './components/Notification';
 import personController from './utils/persons';
 
 function utilCheckIfNameExists(newName, persons) {
@@ -20,6 +21,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNumber ] = useState('')
   const [filter, setFilter ] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
 
@@ -51,12 +53,14 @@ const App = () => {
       // })
       personController.addOne({name: newName, number: newNumber})
         .then(data => {
-          console.log("Response Data", data);
         setPersons(
           [...persons, data]
         );
         setNewName('');
         setNumber('');
+        setErrorMessage(`${newName} has been added`)
+
+        window.setTimeout(() => setErrorMessage(null), 1000)
         })
       
       
@@ -90,6 +94,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      {errorMessage && <Notification message={errorMessage} />}
       <Filter filter={filter} handleFilter={handleFilter} />
       <h3>Add New Person</h3>
       <Form name={newName} number={newNumber} hChange={handleChange} hSubmit={handleSubmit} />
