@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Form from './components/form';
 import Filter from './components/filter';
 import Person from './components/person';
-import axios from 'axios';
+import personController from './utils/persons';
 
 function utilCheckIfNameExists(newName, persons) {
   let found = false;  
@@ -23,26 +23,39 @@ const App = () => {
 
   useEffect(() => {
 
-    const fetchtData = async () => {
-      const result = await axios.get('http://localhost:3001/persons');
-      console.log(result.data)
-    }
-    fetchtData()
+    // const fetchtData = async () => {
+    //   const result = await axios.get('http://localhost:3001/persons');
+    //   console.log(result.data)
+    // }
+    // fetchtData()
+    personController.getAll()
+      .then((data) => {
+        setPersons([...data])
+      })
     
   }, [])
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!utilCheckIfNameExists(newName, persons)){
       
-      axios.post('http://localhost:3001/persons', {name: newName, number: newNumber})
-      .then(response => {
-        console.log("Response Data", response.data)
+      // axios.post('http://localhost:3001/persons', {name: newName, number: newNumber})
+      // .then(response => {
+      //   console.log("Response Data", response.data)
+      //   setPersons(
+      //     [...persons, response.data]
+      //   );
+      //   setNewName('');
+      //   setNumber('');
+      // })
+      personController.addOne({name: newName, number: newNumber})
+        .then(data => {
+          console.log("Response Data", data);
         setPersons(
-          [...persons, response.data]
+          [...persons, data]
         );
         setNewName('');
         setNumber('');
-      })
+        })
       
       
     } else {
