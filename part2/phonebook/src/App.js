@@ -22,6 +22,7 @@ const App = () => {
   const [ newNumber, setNumber ] = useState('')
   const [filter, setFilter ] = useState('');
   const [errorMessage, setErrorMessage] = useState(null)
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
 
@@ -58,8 +59,9 @@ const App = () => {
         );
         setNewName('');
         setNumber('');
+        
+        setIsError(true)
         setErrorMessage(`${newName} has been added`)
-
         window.setTimeout(() => setErrorMessage(null), 1000)
         })
       
@@ -74,6 +76,11 @@ const App = () => {
             const personRemoved = persons.filter(person => person.id !== data.id);
             setPersons([...personRemoved, data])
           
+          })
+          .catch(err => {
+            setIsError(true)
+            setErrorMessage(`${newName} was already deleted. `)
+             window.setTimeout(() => setErrorMessage(null), 2000)
           })
       }
     }
@@ -94,7 +101,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      {errorMessage && <Notification message={errorMessage} />}
+      {errorMessage && <Notification message={errorMessage} isErr={isError}/>}
       <Filter filter={filter} handleFilter={handleFilter} />
       <h3>Add New Person</h3>
       <Form name={newName} number={newNumber} hChange={handleChange} hSubmit={handleSubmit} />
