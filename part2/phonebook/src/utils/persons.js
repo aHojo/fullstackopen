@@ -12,8 +12,13 @@ const addOne= async (person) => {
     return response.data;
 }
 
+const deleteOne = async (id) => {
+    const result = await axios.delete(`${baseUrl}/${id}`)
+    return result.data;
+}
 
 export default {
     getAll,
-    addOne
+    addOne,
+    deleteOne
 }

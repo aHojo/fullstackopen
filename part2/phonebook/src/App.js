@@ -63,6 +63,14 @@ const App = () => {
     }
 
   }
+
+  const handleDelete = (id) => {
+
+    personController.deleteOne(id).then(data => {
+      setPersons(persons.filter(person => person.id !== id))
+    })
+    
+  }
   const handleChange = (e) => e.target.name === 'name' ? setNewName(e.target.value) : setNumber(e.target.value)
   const handleFilter = (e) => setFilter(e.target.value)
 
@@ -74,7 +82,7 @@ const App = () => {
       <h3>Add New Person</h3>
       <Form name={newName} number={newNumber} hChange={handleChange} hSubmit={handleSubmit} />
       <h2>Numbers</h2>
-      {peopleToShow.map(person => <Person key={person.name} name={person.name} number={person.number} />)}
+      {peopleToShow.map(person => <Person key={person.name} name={person.name} number={person.number} id={person.id} hDelete={handleDelete}/>)}
     </div>
   )
 }

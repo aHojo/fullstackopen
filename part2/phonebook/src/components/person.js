@@ -1,6 +1,9 @@
-const Person = ({name, number}) => {
+const Person = ({name, number, id,hDelete}) => {
     return (
-        <p>{name} {"=>"} {number}</p>
+        <div style={{display:"flex", alignItems: "center"}}>
+            <p>{name} {"=>"} {number}</p> 
+            <button onClick={()=> hDelete(id)}>Delete</button>
+        </div>
     )
 }
 
