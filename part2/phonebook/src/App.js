@@ -36,6 +36,8 @@ const App = () => {
   }, [])
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    console.log("new Name", newName, "persons", persons)
     if (!utilCheckIfNameExists(newName, persons)){
       
       // axios.post('http://localhost:3001/persons', {name: newName, number: newNumber})
@@ -59,7 +61,17 @@ const App = () => {
       
       
     } else {
-      alert(`${newName}  already exists`)
+      const newNum = window.confirm(`${newName}  already exists, replace the old number with the new one? `);
+      if (newNum) {
+        const person = persons.find((p) => p.name.toLowerCase() === newName.toLowerCase())
+        const newPerson = {...person, number: newNumber};
+        personController.updateOne(newPerson.id, newPerson)
+          .then(data => {
+            const personRemoved = persons.filter(person => person.id !== data.id);
+            setPersons([...personRemoved, data])
+          
+          })
+      }
     }
 
   }
